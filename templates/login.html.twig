@@ -12,6 +12,11 @@
 			if($('input[name=username]').val() == 'admin' && $('input[name=password]').val() == 'admin'){
 
 			    window.location.href = '{{ path('dashboard') }}';
+			}else{
+				$.alert({
+						title: 'Ops!',
+						content: 'Senha Incorreta, porquê não tenta:<br> <b>usuário: </b>admin <br><b>senha:</b> admin',
+					});
 			}
 
 
