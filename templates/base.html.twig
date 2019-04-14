@@ -1,28 +1,140 @@
 <!DOCTYPE html>
 <html>
-    <head>
-    	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    	<link href="{{ asset('css/style.css') }}" rel="stylesheet">
-		<link rel="stylesheet" type="text/css" href="https://www.highcharts.com/media/com_demo/css/highslide.css" />		
-    	{% block javascript %}
-			<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-			<script src="https://code.highcharts.com/highcharts.js"></script>
-			<script src="https://code.highcharts.com/modules/data.js"></script>
-			<script src="https://code.highcharts.com/modules/series-label.js"></script>
-			<script src="https://code.highcharts.com/modules/exporting.js"></script>
-			<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<head>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">	    	
+	<link href="{{ asset('css/datepicker.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/style.css') }}" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="https://www.highcharts.com/media/com_demo/css/highslide.css" />
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
-			<!-- Additional files for the Highslide popup effect -->
-			<script src="https://www.highcharts.com/media/com_demo/js/highslide-full.min.js"></script>
-			<script src="https://www.highcharts.com/media/com_demo/js/highslide.config.js" charset="utf-8"></script>
-        {% endblock %}
-	        <meta charset="UTF-8">
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+	
+	{% block javascripts  %}
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js" integrity="sha256-0YPKAwZP7Mp3ALMRVB2i8GXeEndvCq3eSl/WsAl1Ryk=" crossorigin="anonymous"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/data.js"></script>
+	<script src="https://code.highcharts.com/modules/series-label.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+	<!-- Additional files for the Highslide popup effect -->
+	<script src="https://www.highcharts.com/media/com_demo/js/highslide-full.min.js"></script>
+	<script src="https://www.highcharts.com/media/com_demo/js/highslide.config.js" charset="utf-8"></script>
+	<script src="{{ asset('js/datepicker.js') }}"></script>
+	<script>
+
+		function menu(){
+			if(open){
+				closeNav()
+				open = false;
+			}else{
+				openNav()
+				open = true;
+			}
+
+		}
+		function openNav() {
+			document.getElementById("mySidenav").style.width = "250px";
+			document.getElementById("main").style.marginLeft = "250px";
+			$(".page-footer").css("marginLeft", "250px");
+		}
+
+		/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
+			document.getElementById("main").style.marginLeft = "0";
+			$(".page-footer").css("marginLeft", "0");
+		}
+		$(document).ready(function() {
+			openNav()
+		});
+
+	</script>
+	{% endblock %}
+	<meta charset="UTF-8">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<title>{% block title %}Welcome!{% endblock %}</title>
+	{% block stylesheets %}{% endblock %}
+</head>
+<body>
+
+
+	{% block header %}
+	<div id="mySidenav" class="sidenav bg-success">  
+		<a class="text-white" href="dashboard">Página Inicial</a>
+		<a class="text-white" href="configuracoes">Configurações</a>
+	</div>
+
+	<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+	<div id="main">
+
+		<!-- Use any element to open the sidenav -->
+		<button onclick="menu() " style="position: fixed;"><i class="fas fa-align-justify"></i>
+
+		</button>
+		{% endblock %}
+		{% block body %}{% endblock %}
+
+		{% block footer %}
+		<!-- Footer -->
+		<div class="page-footer font-small blue pt-4 text-success" style="background-color: #e6e8ed">
+
+			<!-- Footer Links -->
+			<div class="container-fluid text-center text-md-left">
+
+				<!-- Grid row -->
+				<div class="row">
+
+					<!-- Grid column -->
+					<div class="col text-center">
+
+						<!-- Content -->
+						<h5 class="text-uppercase">ONG Cidade Junior</h5>
+						<p>Dashboard desenvolvido para a ONG.</p>
+
+					</div>
+					<!-- Grid column -->
+
+					<hr class="clearfix w-100 d-md-none pb-3">
+
+					<!-- Grid column -->
+					<!-- Grid column -->
+
+					<!-- Grid column -->
+					<div class="col text-center">
+
+						<!-- Links -->
+						<h5 class="text-uppercase">Autores</h5>
+
+						<ul class="list-unstyled">
+							<li>
+								<a href="#!">Allan Kotovei</a>
+							</li>
+							<li>
+								<a href="#!">Juliano Luiz da Silva</a>
+							</li>
+							<li>
+								<a href="#!">Suhelen Oliveira</a>
+							</li>              
+						</ul>
+
+					</div>
+					<!-- Grid column -->
+
+				</div>
+				<!-- Grid row -->
+
+			</div>
+
+			<!-- Copyright -->
+			<div class="footer-copyright text-center py-3">© 2019 Copyright:
+				<a href="https://github.com/julianosilva23/produtos-servicos-informacao"> Projeto Informacional - Equipe10</a>
+			</div>
+			<!-- Copyright -->
+
+		</div>
+		<!-- Footer -->
+		{% endblock %}
+	</div> <!-- div main -->
+</body>
 </html>

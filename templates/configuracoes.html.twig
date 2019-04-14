@@ -1,0 +1,49 @@
+{# templates/default/index.html.twig #}
+{% extends 'base.html.twig' %}
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+	$(document).ready(function() {
+
+
+	});
+	</script>
+{% endblock %}
+{% block header %}
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+	<div class="">
+		<h2 class="text-center">Aqui Será as Configurações</h2>
+		<div class="container">
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text">Cor</span>
+				</div>
+				<input type="color" id="html5colorpicker" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">
+			</div>
+		</div>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+	</div>
+</div>
+{% endblock %}
+{% block footer %}
+	{{ parent() }}
+{% endblock %}
