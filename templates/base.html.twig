@@ -7,6 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="https://www.highcharts.com/media/com_demo/css/highslide.css" />
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 	
 	{% block javascripts  %}
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -24,55 +25,59 @@
 	<script src="https://www.highcharts.com/media/com_demo/js/highslide-full.min.js"></script>
 	<script src="https://www.highcharts.com/media/com_demo/js/highslide.config.js" charset="utf-8"></script>
 	<script src="{{ asset('js/datepicker.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
-	<script>
+	
+	{% endblock %}
+	{% block scriptMenu %}
+		<script>
 
-		function menu(){
-			if(open){
-				closeNav()
-				open = false;
-			}else{
-				openNav()
-				open = true;
+			function menu(){
+				if(open){
+					closeNav()
+					open = false;
+				}else{
+					openNav()
+					open = true;
+				}
+
+			}
+			function openNav() {
+				document.getElementById("mySidenav").style.width = "250px";
+				document.getElementById("main").style.marginLeft = "250px";
+				$(".page-footer").css("marginLeft", "250px");
 			}
 
-		}
-		function openNav() {
-			document.getElementById("mySidenav").style.width = "250px";
-			document.getElementById("main").style.marginLeft = "250px";
-			$(".page-footer").css("marginLeft", "250px");
-		}
+			/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+			function closeNav() {
+				document.getElementById("mySidenav").style.width = "0";
+				document.getElementById("main").style.marginLeft = "0";
+				$(".page-footer").css("marginLeft", "0");
+			}
+			$(document).ready(function() {
+				openNav()
+			});
 
-		/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
-		function closeNav() {
-			document.getElementById("mySidenav").style.width = "0";
-			document.getElementById("main").style.marginLeft = "0";
-			$(".page-footer").css("marginLeft", "0");
-		}
-		$(document).ready(function() {
-			openNav()
-		});
-
-	</script>
+		</script>
 	{% endblock %}
 	<meta charset="UTF-8">
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<title>{% block title %}Welcome!{% endblock %}</title>
 	{% block stylesheets %}{% endblock %}
 </head>
-<body>
-
-
+<body>	
 	{% block header %}
 	<div id="mySidenav" class="sidenav bg-success">  
-		<a class="text-white" href="dashboard">Página Inicial</a>
-		<a class="text-white" href="configuracoes">Configurações</a>
+		<a class="text-white" href="dashboard"><i class="fas fa-home"></i> Página Inicial</a>
+		<a class="text-white" href="configuracoes"><i class="fas fa-cog"></i> Configurações</a>
+		<a class="text-white" href="/"><i class="fas fa-sign-out-alt"></i> Sair</a>
 	</div>
 
 	<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
 	<div id="main">
-
+		<nav class="navbar navbar-light bg-light">
+  			<a class="navbar-brand" href="#">Instituto Cidade Júnior - {{ title }}</a>
+		</nav>
 		<!-- Use any element to open the sidenav -->
 		<button onclick="menu() " style="position: fixed;"><i class="fas fa-align-justify"></i>
 
@@ -94,7 +99,7 @@
 					<div class="col text-center">
 
 						<!-- Content -->
-						<h5 class="text-uppercase">ONG Cidade Junior</h5>
+						<h5 class="text-uppercase">Instituto Cidade Júnior</h5>
 						<p>Dashboard desenvolvido para a ONG.</p>
 
 					</div>

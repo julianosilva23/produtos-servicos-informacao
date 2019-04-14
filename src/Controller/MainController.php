@@ -88,7 +88,7 @@ class MainController extends AbstractController
 		
 		// return new JsonResponse($results);
 		return $this->render('dashboard.html.twig', [
-            'name' => '$name',
+            'title' => 'Dashboard',
         ]);
 		
 	}
@@ -133,7 +133,7 @@ class MainController extends AbstractController
 		
 		// return new JsonResponse($results);
 		return $this->render('configuracoes.html.twig', [
-            'name' => '$name',
+            'title' => 'Configurações',
         ]);
 		
 	}
