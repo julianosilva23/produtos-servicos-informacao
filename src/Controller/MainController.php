@@ -60,8 +60,8 @@ class MainController extends AbstractController
         ->getRepository(Estudante::class)->findEmpresas(5);
 		
 
-		$count_estudantes = $this->getDoctrine()
-        ->getRepository(Estudante::class)->countEstudantes();
+		$estudantes_mes = $this->getDoctrine()
+        ->getRepository(Estudante::class)->estudantesMes();
 
         $qualidade_dados = $this->getDoctrine()
         ->getRepository(Estudante::class)->qualidadeDados();
@@ -72,6 +72,10 @@ class MainController extends AbstractController
 		$count_status = $this->getDoctrine()
         ->getRepository(Estudante::class)->countStatus();
 
+        $empresas_alunos = $this->getDoctrine()
+        ->getRepository(Estudante::class)->empresasAlunos();
+        // var_dump($estudantes_mes['meses']);
+        // die();
         $count_age = $this->getDoctrine()
         ->getRepository(Estudante::class)->countAge();
 		// return new JsonResponse($results);
@@ -82,7 +86,8 @@ class MainController extends AbstractController
             'municipios' => json_encode($count_municipios, true),
             'age' => json_encode($count_age, true),
             'status' => json_encode($count_status, true),
-            'estudantes' => ['meta'=> 200, 'atual' => $count_estudantes]
+            'estudantes' => json_encode($estudantes_mes),
+            'empresas_alunos' => json_encode($empresas_alunos)
         ]);
 		
 	}

@@ -91,23 +91,136 @@ class EstudanteRepository extends ServiceEntityRepository
         $query->execute();
         return $query->fetchAll();
     }
-    public function countEstudantes(): int
+    public function estudantesMes(): array
     {
         $entityManager = $this->getEntityManager();
                 // $em = $this->getDoctrine()->getManager();
 
         $query =
-            "select 
-                count(1)
-            FROM apresentacao.estudante c  
-            where status = true            
+            "
+            SELECT 
+                ARRAY[
+                    sum(jan),
+                    sum(fev),
+                    sum(mar),
+                    sum(abr),
+                    sum(mai),
+                    sum(jun),
+                    sum(jul),
+                    sum(ago),
+                    sum(set),
+                    sum(out),
+                    sum(nov),
+                    sum(dez)
+                ] as ativos,
+                ARRAY[
+                    'Jan',
+                    'Fev',
+                    'Mar',
+                    'Abr',
+                    'Mai',
+                    'Jun',
+                    'Jul',
+                    'Ago',
+                    'Set',
+                    'Out',
+                    'Nov',
+                    'Dez'
+                ] as meses,
+                ARRAY[
+                    total_estudantes - sum(jan),
+                    total_estudantes - sum(fev),
+                    total_estudantes - sum(mar),
+                    total_estudantes - sum(abr),
+                    total_estudantes - sum(mai),
+                    total_estudantes - sum(jun),
+                    total_estudantes - sum(jul),
+                    total_estudantes - sum(ago),
+                    total_estudantes - sum(set),
+                    total_estudantes - sum(out),
+                    total_estudantes - sum(nov),
+                    total_estudantes - sum(dez)
+                ] as inativos
+            FROM (
+                SELECT 
+                    CASE WHEN EXTRACT(MONTH FROM data_saida) >= 1 or EXTRACT(YEAR FROM data_saida) > 2019 
+                    THEN 1 ELSE 0 END AS jan,
+                    CASE WHEN EXTRACT(MONTH FROM data_saida) >= 2 or EXTRACT(YEAR FROM data_saida) > 2019 
+                    THEN 1 ELSE 0 END AS fev,
+                    CASE WHEN EXTRACT(MONTH FROM data_saida) >= 3 or EXTRACT(YEAR FROM data_saida) > 2019
+                    THEN 1 ELSE 0 END AS mar,
+                    CASE WHEN EXTRACT(MONTH FROM data_saida) >= 4 or EXTRACT(YEAR FROM data_saida) > 2019
+                    THEN 1 ELSE 0 END AS abr,
+                    CASE WHEN EXTRACT(MONTH FROM data_saida) >= 5 or EXTRACT(YEAR FROM data_saida) > 2019
+                    THEN 1 ELSE 0 END AS mai,
+                    CASE WHEN EXTRACT(MONTH FROM data_saida) >= 6 or EXTRACT(YEAR FROM data_saida) > 2019
+                    THEN 1 ELSE 0 END AS jun,
+                    CASE WHEN EXTRACT(MONTH FROM data_saida) >= 7 or EXTRACT(YEAR FROM data_saida) > 2019
+                    THEN 1 ELSE 0 END AS jul,
+                    CASE WHEN EXTRACT(MONTH FROM data_saida) >= 8 or EXTRACT(YEAR FROM data_saida) > 2019
+                    THEN 1 ELSE 0 END AS ago,
+                    CASE WHEN EXTRACT(MONTH FROM data_saida) >= 9 or EXTRACT(YEAR FROM data_saida) > 2019
+                    THEN 1 ELSE 0 END AS set,
+                    CASE WHEN EXTRACT(MONTH FROM data_saida) >= 10 or EXTRACT(YEAR FROM data_saida) > 2019
+                    THEN 1 ELSE 0 END AS out,
+                    CASE WHEN EXTRACT(MONTH FROM data_saida) >= 11 or EXTRACT(YEAR FROM data_saida) > 2019
+                    THEN 1 ELSE 0 END AS nov,
+                    CASE WHEN EXTRACT(MONTH FROM data_saida) >= 12 or EXTRACT(YEAR FROM data_saida) > 2019
+                    THEN 1 ELSE 0 END AS dez,
+                    (SELECT COUNT(1) FROM apresentacao.estudante) as total_estudantes
+                FROM apresentacao.estudante
+                WHERE data_saida > '2019-01-01'
+            ) count
+            GROUP BY total_estudantes           
             ";
 
         $query = $entityManager->getConnection()->prepare($query);
 
         $query->execute();
+        $estudante = $query->fetch();
 
-        return $query->fetch()['count'];
+        foreach ($estudante as &$value) {
+            $value = str_replace('{', '', $value);
+            $value = str_replace('}', '', $value);
+            $value = explode(',', $value);
+        }
+
+        return $estudante;
+    }
+
+    public function empresasAlunos(): array
+    {
+        $entityManager = $this->getEntityManager();
+                // $em = $this->getDoctrine()->getManager();
+
+        $query =
+            "
+            SELECT 
+                count(*) filter(where data_saida > current_date) as ativo, 
+                count(*) filter(where data_saida < current_date) as inativo,
+                empresa
+            FROM apresentacao.estudante
+            group by 3
+            order by 2 desc        
+            ";
+
+        $query = $entityManager->getConnection()->prepare($query);
+
+        $query->execute();
+        $empresasAlunos = $query->fetchAll();
+        $series = [];
+
+        foreach ($empresasAlunos as &$value) {
+            $series[] = [
+                'name' => $value['empresa'],
+                'data' => [[$value['ativo'], $value['inativo']]]
+            ];
+        }
+        // echo "<pre>";
+        // print_r($series);
+        // die();
+
+        return $series;
     }
     public function qualidadeDados(): array
     {

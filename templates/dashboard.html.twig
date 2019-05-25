@@ -56,10 +56,12 @@
 			
 		}
 	var empresas = {{empresas | raw}}
-	console.log(empresas)
 		Highcharts.chart('container2', {
+	credits: {
+      			enabled: false
+  			},
     chart: {
-        type: 'column'
+        type: 'pie'
     },
     title: {
         text: 'As 5 empresas com mais aprendizes'
@@ -93,6 +95,9 @@
 });
 	var qualidade_dados = {{qualidade_dados | raw}}
 		Highcharts.chart('container3', {
+	credits: {
+      			enabled: false
+  			},
     chart: {
         type: 'column'
     },
@@ -112,7 +117,7 @@
     yAxis: {
         min: 0,
         title: {
-            text: '%'
+            text: 'Porcentagem (%)'
         }
     },
     legend: {
@@ -129,6 +134,9 @@
 	
 	var municipios = {{municipios | raw}}
 		Highcharts.chart('container4', {
+	credits: {
+      			enabled: false
+  			},
     chart: {
         type: 'column'
     },
@@ -148,7 +156,7 @@
     yAxis: {
         min: 0,
         title: {
-            text: 'quantidade'
+            text: 'Quantidade'
         }
     },
     legend: {
@@ -162,83 +170,11 @@
         data: municipios
     }]
 });
-	var status = {{status | raw}}
-		Highcharts.chart('container5', {
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: 'Aprendizes por Status'
-    },   
-    xAxis: {
-        type: 'category',
-        labels: {
-            rotation: -45,
-            style: {
-                fontSize: '13px',
-                fontFamily: 'Verdana, sans-serif'
-            }
-        }
-    },
-    yAxis: {
-        min: 0,
-        title: {
-            text: 'quantidade'
-        }
-    },
-    legend: {
-        enabled: false
-    },
-    tooltip: {
-        pointFormat: '<b>{point.y}</b>'
-    },
-    series: [{
-        name: 'Cidade',
-        data: status
-    }]
-});
-
-
-		var age = {{age | raw}}
-		console.log(age)
-		Highcharts.chart('container6', {
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: 'Aprendizes por Faixa Etária'
-    },   
-    xAxis: {
-        type: 'category',
-        labels: {
-            rotation: -45,
-            style: {
-                fontSize: '13px',
-                fontFamily: 'Verdana, sans-serif'
-            }
-        }
-    },
-    yAxis: {
-        min: 0,
-        title: {
-            text: 'quantidade'
-        }
-    },
-    legend: {
-        enabled: false
-    },
-    tooltip: {
-        pointFormat: '<b>{point.y}</b>'
-    },
-    series: [{
-        name: 'Cidade',
-        data: age
-    }]
-});
-
-		
+			
 	var gaugeOptions = {
-
+			credits: {
+      			enabled: false
+  			},
 			chart: {
 				type: 'solidgauge'
 			},
@@ -289,39 +225,112 @@
 				}
 			}
 			};
-
+		var estudantes = {{estudantes | raw}}
 		// The speed gauge
-		var chartSpeed = Highcharts.chart('container-speed', Highcharts.merge(gaugeOptions, {
-			
-			yAxis: {
-				min: 0,
-				max: 200,
-				title: {
-					text: 'Quantidade de Aprendizes'
-				}
-			},
+		Highcharts.chart('container-speed', {
+		    chart: {
+		        type: 'line'
+		    },
+		    credits: {
+      			enabled: false
+  			},
+		    title: {
+		        text: 'Aprendizes por Mês'
+		    },		   
+		    xAxis: {
+		    	categories: estudantes.meses
+		    },
+		    yAxis: {
+		        title: {
+		            text: 'Quantidade'
+		        }
+		    },
+		    plotOptions: {
+		        line: {
+		            dataLabels: {
+		                enabled: false
+		            }
+		        }
+		    },
+		    series: [{
+		        name: 'ativos',
+		        data: estudantes.ativos.map(Number)
+		    }, {
+		        name: 'inativos',
+		        data: estudantes.inativos.map(Number)
+		    }]
+		});
 
-			credits: {
-				enabled: false
-			},
+		var empresas_alunos = {{empresas_alunos | raw}}
+		console.log(empresas_alunos)
+		Highcharts.chart('empresas_alunos', {
+	credits: {
+      			enabled: false
+  			},
+    chart: {
+        type: 'scatter',
+        zoomType: 'xy'
+    },
+    title: {
+        text: 'Relação entre Empresas Parceiras e Alunos'
+    },
+    xAxis: {
+        title: {
+            enabled: true,
+            text: 'Estudantes Ativos'
+        },        
+        endOnTick: true,
+        showLastLabel: true,
+        tickInterval: 1,        
+    },
+    yAxis: {
+        title: {
+            text: 'Estudantes Inativos'
+        }
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'left',
+        verticalAlign: 'top',
+        x: 100,
+        y: 70,
+        floating: false,
+        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+        borderWidth: 1
+    },
+    plotOptions: {    	
+        scatter: {
+            marker: {
+                radius: 5,
+                states: {
+                    hover: {
+                        enabled: true,
+                        lineColor: 'rgb(100,100,100)'
+                    }
+                }
+            },
+            states: {
+                hover: {
+                    marker: {
+                        enabled: false
+                    }
+                }
+            },
+            tooltip: {
+                headerFormat: '<b>{series.name}</b><br>',
+                pointFormat: '{point.x} Aluno(s) Ativo(s), {point.y} Aluno(s) Inativo'
+            }
+        }
+    },
+    series: empresas_alunos
+});
 
-			series: [{
-				name: 'Speeffffffffffffffd',
-				data: [{{estudantes.atual}}],
-				dataLabels: {
-					format: '<div style="text-align:center"><span style="font-size:25px;color:' +
-					((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
-					'<span style="font-size:12px;color:silver">Estudantes</span></div>'
-				},
-				tooltip: {
-					valueSuffix: ' Alunos'
-				}
-			}]
-
-		}));
 
 });
 </script>
+{% block css %}
+	{{ parent() }}
+{% endblock %}
 {% endblock %}
 {% block header %}
 	{{ parent() }}
@@ -329,66 +338,101 @@
 
 {% block body %}
 	{{ parent() }}
-	<div class="">
+	<style> 
+.boxshadow {
+  position: relative;
+  -moz-box-shadow: 1px 2px 4px rgba(0, 0, 0,0.5);
+  -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+  padding: 10px;
+  background: white;
+}
 
+/* Make the image fit the box */
+
+.boxshadow::after {
+  content: '';
+  position: absolute;
+  z-index: -1; /* hide shadow behind image */
+  -webkit-box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);        
+  width: 70%; 
+  left: 15%; /* one half of the remaining 30% */
+  height: 100px;
+  bottom: 0;
+}
+
+.padrao{
+	background-color: #4D613E;
+	border-color: #4D613E;
+}
+</style>
+<br>
 		<div class="container">
+				<div class="boxshadow">
 			<div class="row">
-				<div class="col-10 text-center">
-					<h3>
-						Selecione um Período
-					</h3>
-				</div>
-				<div class="col-2 text-right">
-					<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-						Filtrar Por:
-						<div class="btn-group" role="group" aria-label="First group">
-							<button type="button" data-period="dd/mm/yyyy" class="btn btn-success period_button day">Dia</button>
-							<button type="button" data-period="mm/yyyy" class="btn btn-success period_button month">Mês</button>
-							<button type="button year" data-period="yyyy" class="btn btn-success period_button">Ano</button>
+					
+					<div class="col-sm-6">
+						<strong>Filtros</strong>
+						<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">						
+							<div class="btn-group" role="group" aria-label="First group">
+								<button type="button" data-period="dd/mm/yyyy" class="btn btn-success period_button day padrao">Dia</button>
+								<button type="button" data-period="mm/yyyy" class="btn btn-success period_button month padrao">Mês</button>
+								<button type="button year" data-period="yyyy" class="btn btn-success period_button padrao">Ano</button>
+							</div>
 						</div>
-					</div>
-				</div>
+						<br>
+							<strong>Selecione um Período</strong>					
+							<div class="">
+								<input class="prevPeriod" placeholder="Início" style="margin:10px"data-toggle="datepicker">
+								<input class="currPeriod" style="margin:10px" placeholder="Fim" data-toggle="datepicker">	
+								<button type="button" style="margin:10px" class="btn btn-success filterButton padrao">Filtrar</button>
+								<div style="margin:10px">
+									<small>Período Selecionado:</small>
+									<strong>Jan a Dez de 2019</strong>
+								</div>
+							</div>
+					</div>	
+					<div class="col-6">
+						Instruções
+						<br>
+						Para selecionar um período basta selecionar o filtro desejado e utilizar os filtros, é possível filtrar por:
+						<ul>
+							<li>Dia</li>
+							<li>Mes</li>
+							<li>Ano</li>
+						</ul>
+					</div>				
+				</div>		
 			</div>
-			<div class="row">
-				<div class="col-3 text-center">
-					Início <input class="prevPeriod" data-toggle="datepicker">
-				</div>
-				<div class="col-3 text-center">
-					Fim <input class="currPeriod" data-toggle="datepicker">
-				</div>
-				<div class="col-2 text-center">
-					<button type="button" class="btn btn-success filterButton">Filtrar</button>
-				</div>
-			</div>
+		<br>
 			<hr>
 			<div class="row">
-				<div class="col">
-					<div class="border" id="container-speed" ></div>
+				<div class="col-md">
+					<div class="border boxshadow" id="container-speed" ></div>
 				</div>
-				<div class="col">
-					<div class="border" id="container2" ></div>
-				</div>
-			</div>
-			<br>
-			<div class="row">
-				<div class="col">
-					<div class="border" id="container3" ></div>
-				</div>
-				<div class="col">
-					<div class="border" id="container4" ></div>
+				<div class="col-md">
+					<div class="border boxshadow" id="container2" ></div>
 				</div>
 			</div>
 			<br>
 			<div class="row">
-					<div class="col">
-						<div class="border" id="container5" ></div>
-					</div>
-					<div class="col">
-						<div class="border" id="container6" ></div>
+				<div class="col-md">
+					<div class="border boxshadow" id="container3" ></div>
+				</div>
+				<div class="col-md">
+					<div class="border boxshadow" id="container4" ></div>
+				</div>
+			</div>
+			<br>		
+			<div class="row">
+					<div class="col-12">
+						<div class="border boxshadow" id="empresas_alunos" ></div>
 					</div>
 				</div>
 			</div>
-	</main>
+			<br>
 </div>
 </div>
 {% endblock %}
