@@ -260,15 +260,15 @@ class EstudanteRepository extends ServiceEntityRepository
 
 
         $query =
-            "select
+            "SELECT
                 CASE 
                 WHEN status=true THEN 'Ativo'
                 WHEN status=false THEN 'Inativo'
 
                 END as name
                 , count(nome) as y
-            from (
-                select 
+            FROM (
+                SELECT 
                     c.*,
                     m.descricao as descricao_motivo 
                 FROM apresentacao.estudante c
@@ -291,24 +291,24 @@ class EstudanteRepository extends ServiceEntityRepository
 
 
         $query =
-            "select
+            "SELECT
                 case when year BETWEEN 15 and 19 then '15 - 19'
                 when year BETWEEN 19 and 23 then '19 - 23'
                 when year BETWEEN 23 and 27 then '23 - 27'
                 when year BETWEEN 27 and 100 then '23 - 27'
                 END as name,
                 sum(y)::int as y
-            from (
-                select
+            FROM (
+                SELECT
                 date_part('year',age(data_nascimento)) as year
                 , count(nome) as y
-                from (
-                    select 
+                FROM (
+                    SELECT 
                         c.*,
                         m.descricao as descricao_motivo 
                     FROM apresentacao.estudante c
-                    left join apresentacao.motivo m using(id_motivo)    
-                   where status = true
+                    LEFT JOIN apresentacao.motivo m using(id_motivo)    
+                   WHERE status = true
 
                 ) calculo
                 group by 1

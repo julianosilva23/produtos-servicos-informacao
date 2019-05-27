@@ -2,8 +2,11 @@
 namespace App\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Estudante;
@@ -20,9 +23,9 @@ class MainController extends AbstractController
 {	
 	private $session;
 
-	// Injeção de dependência do serviço da sessão
-    public function __construct(SessionInterface $session)
+    public function __construct(UrlGeneratorInterface $urlGenerator, SessionInterface $session)
     {
+        $this->urlGenerator = $urlGenerator;
         $this->session = $session;
     }
 
@@ -31,23 +34,9 @@ class MainController extends AbstractController
 	*
 	* @Route("/")
     */
-	public function index(Request $request)
+	public function index()
 	{
-		$results = [];
-		// verifica se é passado o usuário na url
-		if(!empty($request->query->all()) && $request->query->all()['username']){
-
-			// atribui o usuário da url na sessão
-			$this->session->set('name', $request->query->all()['username']);
-
-			// atrbiu uma resposta para a requisição
-			$results = ['ok'];
-
-		};
-		
-		return $this->render('login.html.twig', [
-            'name' => '$name',
-        ]);
+		return new RedirectResponse($this->urlGenerator->generate('app_login'));
 		
 	}
 
@@ -98,42 +87,23 @@ class MainController extends AbstractController
 	public function configuracoes(Request $request)
 	{
 
-		// verifica sessão a procura do nome do usuário, se este existir atribui a chave 'name'
-		// $results = [
-		// 	'name'   => $this->session->get('name') ? $this->session->get('name') : 'anonimo',
-		// 	'alunos' => []
-		// ];
-
-		// // verifica se a url passa a chave de segurança 'cidadejunio', caso positivo faz a conexão com o banco de dados e carrega os dados dos alunos para a exibição
-
-		// if(!empty($request->query->all()) && $request->query->all()['key'] == 'cidadejunior'){
-		// 	// caminho físico do banco de dados (no futuro esta configuração estará no arquivo .env)
-		// 	$host = 'localhost:C:\Users\Juliano\Desktop\CIDADE.FDB';
-
-		// 	// conexão ao banco passando usuário e senha
-		// 	$dbh = ibase_connect($host, 'SYSDBA', 'root');
-
-		// 	// query para visualizar todos os alunos
-		// 	$stmt = 'SELECT * FROM alunos';
-
-		// 	// execução da query
-		// 	$sth = ibase_query($dbh, $stmt);
-
-		// 	// os nomes de alunos são recebidos no array
-		// 	while ($row = ibase_fetch_object($sth)) {
-		// 	    $results['alunos'][] = $row->NICKNAME;
-		// 	}
-		// 	ibase_free_result($sth);
-
-		// 	// a conexão com o banco de dados é fechada
-		// 	ibase_close($dbh);
-
-		// };
-		
-		// return new JsonResponse($results);
 		return $this->render('configuracoes.html.twig', [
             'title' => 'Configurações',
         ]);
+		
+	}
+
+	/**
+	* @Route("/periodo", name="periodo")
+    */
+	public function setPeriodo(Request $request)
+	{
+
+		$date = $request->getContent();
+
+		print_r($date);
+
+		die();
 		
 	}
 }

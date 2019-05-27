@@ -3,33 +3,11 @@
 {% block javascripts  %}
 	{{ parent() }}
 	
-<script>
-	$(document).ready(function() {
-		// This WILL work because we are listening on the 'document', 
-		// for a click on an element with an ID of #test-element
-		$(document).on("click","#buttonLogin",function() {
-			console.log('teste')
-			if($('input[name=username]').val() == 'admin' && $('input[name=password]').val() == 'admin'){
-
-			    window.location.href = '{{ path('dashboard') }}';
-			}else{
-				$.alert({
-						title: 'Ops!',
-						content: 'Senha Incorreta, porquê não tenta:<br> <b>usuário: </b>admin <br><b>senha:</b> admin',
-					});
-			}
-
-
-		});
-	});
-</script>
 {% endblock %}	
 {% block header %}
 {% endblock %}
-{% block scriptMenu %}
-{% endblock %}
 {% block body %}
-	    <div class = "container">
+<div class = "container">
 	<div class="wrapper">
 		<form name="Login_Form" class="form-signin">       
 		    <h3 class="form-signin-heading">Bem Vindo ao Instituto Cidade Júnior</h3>
