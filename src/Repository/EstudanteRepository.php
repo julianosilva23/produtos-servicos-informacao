@@ -230,13 +230,13 @@ class EstudanteRepository extends ServiceEntityRepository
         $query =
             "SELECT 
                 count(1) /
-                count(1) * 99 as nome ,
+                count(1) * 100 as nome ,
                 count(cidade) /
-                count(cidade) * 87 as cidade,
+                count(cidade) * 99 as cidade,
                 count(status) /
-                count(status) * 75 as status,
+                count(status) * 100 as status,
                 count(empresa) /
-                count(empresa) * 90 as empresa
+                count(empresa) * 99 as empresa
             FROM apresentacao.estudante
            
             ";
