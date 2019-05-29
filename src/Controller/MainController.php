@@ -36,8 +36,7 @@ class MainController extends AbstractController
     */
 	public function index()
 	{
-		return new RedirectResponse($this->urlGenerator->generate('app_login'));
-		
+		return new RedirectResponse($this->urlGenerator->generate('app_login'));	
 	}
 
 	/**
@@ -47,7 +46,6 @@ class MainController extends AbstractController
 	{
 		$empresas = $this->getDoctrine()
         ->getRepository(Estudante::class)->findEmpresas(5);
-		
 
 		$estudantes_mes = $this->getDoctrine()
         ->getRepository(Estudante::class)->estudantesMes();
@@ -63,11 +61,10 @@ class MainController extends AbstractController
 
         $empresas_alunos = $this->getDoctrine()
         ->getRepository(Estudante::class)->empresasAlunos();
-        // var_dump($estudantes_mes['meses']);
-        // die();
+
         $count_age = $this->getDoctrine()
         ->getRepository(Estudante::class)->countAge();
-		// return new JsonResponse($results);
+
 		return $this->render('dashboard.html.twig', [
             'title' => 'Dashboard',
             'empresas' => json_encode($empresas, true),

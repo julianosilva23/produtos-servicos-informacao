@@ -6,40 +6,57 @@
 {% endblock %}  
 {% block header %}
 {% endblock %}
-{% block body %}
+{% block css %}
+      {{ parent() }}    
+    <style>
+    .navbar .navbar-nav {
+  display: inline-block;
+  float: none;
+  vertical-align: top;
+}
 
-    <div class = "container">
+.navbar .navbar-collapse {
+  text-align: center;
+}
+
+.imagemDeFundo{
+    /*border: 1px solid black;*/
+    /*background: black; */
+    
+}
+</style>
+{% endblock %}
+{% block body %}
+<nav class="navbar navbar-expand-lg navbar-light padrao">
+  {# <a class="navbar-brand" href="#">Navbar</a> #}  
+  <img src="{{ asset('img/header.png') }}" width="120" height="60">
+  <div class="mx-auto order-0">
+        <a class="navbar-brand mx-auto text-white" href="#">Painel de Gestão - Indicadores - <span class="small">Instituto Cidade Junior</span></a>        
+    </div>
+</nav>
+<div class="imagemDeFundo">
+    <div class="container ">
         <div class="wrapper"> 
                 <form method="post" class="form-signin">    
                 <h3 class="form-signin-heading">Bem Vindo ao Instituto Cidade Júnior</h3>
-                  <hr class="colorgraph"><br>
+                  <hr class=""><br>
                     {% if error %}
                         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                     {% endif %}   
 
-                  <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+                  <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" placeholder="Usuário" required autofocus>
 
 
-                  <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                  <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Senha" required>
 
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">     
-                <button class="btn btn-lg btn-primary btn-block" type="submit">
-        Sign in
+                <button class="btn btn-lg btn-primary btn-block padrao" type="submit">
+        Entrar
     </button>
 </form>       
         </div>
     </div>
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-    #}
-
+</div>
     
 {% endblock %}
 {% block footer %}
