@@ -51,9 +51,12 @@ color: #e2dede;
 <body>	
 	{% block header %}
 
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<nav class="navbar navbar-expand-lg padrao">
   {# <a class="navbar-brand" href="#">Navbar</a> #}
-  <img src="{{ asset('img/img_cidadejunior.png') }}" width="131" height="50">
+  <img src="{{ asset('img/header.png') }}" width="120" height="60">
+  <div class="mx-auto order-0">
+        <a class="navbar mx-auto text-white" href="#">Painel de Gestão de Indicadores - <span class="small">Instituto Cidade Junior</span></a>        
+    </div>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -61,13 +64,13 @@ color: #e2dede;
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Página Principal <span class="sr-only">(current)</span></a>
+        <a class="nav-link link" href="#">Página Principal <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Configurações</a>
+        <a class="nav-link link" href="#">Configurações</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="{{ path('logout')}}">Sair</a>
+        <a class="nav-link link disabled" href="{{ path('logout')}}">Sair</a>
       </li>
     </ul>    
   </div>
@@ -77,10 +80,10 @@ color: #e2dede;
 
 		{% block footer %}
 		<!-- Footer -->
-		<div class="page-footer font-small pt-4 text-white" style="background-color: #4d613e">
+		<div class="page font-small pt-4 text-white" style="background-color: #4d613e">
 
 			<!-- Footer Links -->
-			<div class="container text-center text-md-left">
+			<div class="text-center text-md-left">
 
 				<!-- Grid row -->
 				<div class="row">
@@ -94,9 +97,6 @@ color: #e2dede;
 
 					</div>
 					<!-- Grid column -->
-
-					<hr class="clearfix">
-
 					<!-- Grid column -->
 					<!-- Grid column -->
 

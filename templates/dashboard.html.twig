@@ -338,6 +338,13 @@
   padding: 10px;
   background: white;
 }
+
+
+.vl {
+  border-left: 1px solid #4D613E;
+  margin-right: 6px;
+  height: 110px;
+}
 	</style>
 {% endblock %}
 {% block body %}
@@ -348,36 +355,25 @@
 				<div class="filtro">
 			<div class="row">
 					
-					<div class="col-sm-6">
-						<strong>Filtros</strong>
-						<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">						
+					<div class="col-sm-12 text-center">
+						<strong>Filtrar por:</strong>
+						<div class="btn justify-content-between" role="toolbar" aria-label="Toolbar with button groups">						
 							<div class="btn-group" role="group" aria-label="First group">
 								<button type="button" data-period="dd/mm/yyyy" class="btn btn-success period_button day padrao">Dia</button>
 								<button type="button" data-period="mm/yyyy" class="btn btn-success period_button month padrao">Mês</button>
 								<button type="button year" data-period="yyyy" class="btn btn-success period_button padrao">Ano</button>
 							</div>
 						</div>
-						<br>
+						<hr>
 							<strong>Selecione um Período</strong>					
-							<div class="">
+							<div class="text-left">
 								<input class="prevPeriod" placeholder="Início" style="margin:10px"data-toggle="datepicker">
 								<input class="currPeriod" style="margin:10px" placeholder="Fim" data-toggle="datepicker">	
 								<button type="button" style="margin:10px" class="btn btn-success filterButton padrao">Filtrar</button>
-								<div style="margin:10px">
-									<small>Período Selecionado:</small>
+								<span class="vl"></span>
+								<small> Período Selecionado:</small>
 									<strong>Jan a Dez de 2019</strong>
-								</div>
 							</div>
-					</div>	
-					<div class="col-6">
-						Instruções
-						<br>
-						Para selecionar um período basta selecionar o filtro desejado e utilizar os filtros, é possível filtrar por:
-						<ul>
-							<li>Dia</li>
-							<li>Mes</li>
-							<li>Ano</li>
-						</ul>
 					</div>				
 				</div>		
 			</div>
